@@ -1,0 +1,306 @@
+#!/usr/bin/env node
+"use strict";
+
+/*
+  Hardened single-file KEM-DEM processor (secp256k1 ECDH + ChaCha20-Poly1305).
+  - Real asymmetric confidentiality on Bitcoin's curve
+  - Outputs encryption package for commitment/timestamping
+  - Round-trip verification
+  - Adds: strict UTF-8 STDIN validation + word-wrapped output
+*/
+
+import crypto from "crypto";
+import { TextDecoder } from "util";
+
+/* ============================================================
+   CLI (wrap + limits)
+============================================================ */
+function parseArgs(argv) {
+  const out = {
+    wrap: null,                // number | null (auto)
+    maxBytes: 5 * 1024 * 1024, // 5 MiB default
+    allowEmpty: false,
+  };
+  for (let i = 2; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === "--wrap") {
+      const v = argv[++i];
+      if (!v || !/^\d+$/.test(v)) throw new Error("Invalid --wrap value (expected integer).");
+      out.wrap = Math.max(20, Math.min(400, parseInt(v, 10)));
+    } else if (a === "--max-bytes") {
+      const v = argv[++i];
+      if (!v || !/^\d+$/.test(v)) throw new Error("Invalid --max-bytes value (expected integer).");
+      out.maxBytes = Math.max(1, parseInt(v, 10));
+    } else if (a === "--allow-empty") {
+      out.allowEmpty = true;
+    } else if (a === "--help" || a === "-h") {
+      console.log(`Usage:
+  cat file.txt | node kem_dem.js [--wrap N] [--max-bytes N] [--allow-empty]
+
+Options:
+  --wrap N       Wrap output to N columns (default: terminal width or 80)
+  --max-bytes N  Max stdin bytes accepted (default: 5242880)
+  --allow-empty  Allow empty stdin without error (otherwise falls back to TEST_DATA only if TTY)
+`);
+      process.exit(0);
+    } else {
+      throw new Error(`Unknown arg: ${a}`);
+    }
+  }
+  return out;
+}
+
+const ARGS = parseArgs(process.argv);
+
+/* ============================================================
+   Test fallback
+============================================================ */
+const TEST_DATA = `ᘛ⁠⁐̤⁠ᘀ00∞ ❤️
+
+transmission: PGHIJLL
+
+GHIJL MNQUVWX HIJLMNQUVWXZKRYPTOSABO UMNOUWXZKRYPTOSABCDB0 GOD
+VWXZKRYPTOSABCDE *#9669_-Banksÿÿӱӱ-Х
+
+SRHEOCPTEOIBIDYSHNAIACH INGHSNOSMRWXMNETPRNG
+HERINELEBLPIHACAEWMTWNDITE ΡΕΙΝΗΛΕΟETFOLSEDTIWENH
+HPICTAYGREIFTBRSPAMHHEWE HER ERLITEEFOASFIOTUETUAEÓI
+ΟΝΙΑΔΗHTTMSTEWPIER IDDHILGEIHSITEGO FAOSDD`;
+
+/* ============================================================
+   Helpers
+============================================================ */
+function sha256(d){ return crypto.createHash("sha256").update(d).digest(); }
+function hmacSha256(k,d){ return crypto.createHmac("sha256",k).update(d).digest(); }
+function hkdf(ikm,salt,info,len){
+  const prk = hmacSha256(salt, ikm);
+  let t = Buffer.alloc(0), okm = Buffer.alloc(0), c = 1;
+  while (okm.length < len) {
+    t = hmacSha256(prk, Buffer.concat([t, info, Buffer.from([c++])]));
+    okm = Buffer.concat([okm, t]);
+  }
+  return okm.subarray(0, len);
+}
+function b64u(b){ return b.toString("base64").replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function b64uDec(s){
+  const p = s.replace(/-/g,"+").replace(/_/g,"/") + "===".slice((s.length + 3) % 4);
+  return Buffer.from(p, "base64");
+}
+
+/* ============================================================
+   Word wrap (preserves existing newlines; wraps each paragraph)
+============================================================ */
+function termWidthFallback() {
+  const c = process.stdout && process.stdout.columns;
+  if (Number.isFinite(c) && c >= 40) return c;
+  return 80;
+}
+
+function wrapParagraph(par, width) {
+  // Preserve leading indentation for each line-block (common in markdown)
+  const m = par.match(/^(\s+)/);
+  const indent = m ? m[1] : "";
+  const w = Math.max(20, width - indent.length);
+
+  // Collapse internal whitespace (but keep single spaces) for wrapping;
+  // leave very long "words" intact.
+  const words = par.trim().split(/\s+/);
+  const lines = [];
+  let line = indent;
+
+  for (const word of words) {
+    if ((line.trim().length === 0 ? indent.length : line.length) + (line.trim().length ? 1 : 0) + word.length <= width) {
+      line += (line.trim().length ? " " : "") + word;
+    } else {
+      if (line.trim().length) lines.push(line);
+      // If word itself longer than width, hard-split it.
+      if (word.length > w) {
+        let start = 0;
+        while (start < word.length) {
+          const chunk = word.slice(start, start + w);
+          lines.push(indent + chunk);
+          start += w;
+        }
+        line = indent;
+      } else {
+        line = indent + word;
+      }
+    }
+  }
+  if (line.trim().length) lines.push(line);
+  return lines.join("\n");
+}
+
+function wordWrapText(text, width) {
+  // Split into paragraphs on blank lines, but preserve blank lines.
+  const parts = text.split(/\n{2,}/);
+  const seps = text.match(/\n{2,}/g) || [];
+  const out = [];
+  for (let i = 0; i < parts.length; i++) {
+    const p = parts[i];
+    // Keep lines that are already "structured" (e.g., code fences) intact
+    // by skipping wrap if it contains triple backticks.
+    if (p.includes("```")) {
+      out.push(p);
+    } else {
+      // Wrap each existing line as its own paragraph if it has hard breaks
+      // (keeps lists from turning into one mega paragraph).
+      const lines = p.split("\n");
+      const wrappedLines = lines.map(l => (l.trim().length ? wrapParagraph(l, width) : l));
+      out.push(wrappedLines.join("\n"));
+    }
+    if (i < seps.length) out.push(seps[i]); // restore original blank-line separator
+  }
+  return out.join("");
+}
+
+/* ============================================================
+   Hardened secp256k1 ECDH KEM
+============================================================ */
+function kemKeygen(){
+  const receiver = crypto.createECDH("secp256k1");
+  receiver.generateKeys();
+  const pk = receiver.getPublicKey();   // 33-byte compressed
+  const sk = receiver.getPrivateKey();  // 32-byte scalar
+  return { pk, sk };
+}
+
+function kemEncaps(pk){
+  const sender = crypto.createECDH("secp256k1");
+  sender.generateKeys();
+  const ctKem = sender.getPublicKey();  // 33-byte compressed ephemeral pk
+  const ss_raw = sender.computeSecret(pk);
+  const ss = hkdf(ss_raw, sha256(Buffer.from("SS")), Buffer.from("ss"), 32);
+  return { ctKem: b64u(ctKem), ss };
+}
+
+function kemDecaps(sk, ctKem){
+  const ctBytes = b64uDec(ctKem);
+  const receiver = crypto.createECDH("secp256k1");
+  receiver.setPrivateKey(sk);
+  const ss_raw = receiver.computeSecret(ctBytes);
+  return hkdf(ss_raw, sha256(Buffer.from("SS")), Buffer.from("ss"), 32);
+}
+
+/* ============================================================
+   DEM
+============================================================ */
+function demEncrypt(ss, plaintext){
+  const key = hkdf(ss, sha256(Buffer.from("DEM")), Buffer.from("KEY"), 32);
+  const nonce = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv("chacha20-poly1305", key, nonce, { authTagLength: 16 });
+  const ct = Buffer.concat([cipher.update(Buffer.from(plaintext, "utf8")), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return { nonce: b64u(nonce), ct: b64u(ct), tag: b64u(tag) };
+}
+
+function demDecrypt(ss, obj){
+  const key = hkdf(ss, sha256(Buffer.from("DEM")), Buffer.from("KEY"), 32);
+  const nonce = b64uDec(obj.nonce);
+  const ct = b64uDec(obj.ct);
+  const tag = b64uDec(obj.tag);
+  const dec = crypto.createDecipheriv("chacha20-poly1305", key, nonce, { authTagLength: 16 });
+  dec.setAuthTag(tag);
+  const pt = Buffer.concat([dec.update(ct), dec.final()]);
+  return pt.toString("utf8");
+}
+
+/* ============================================================
+   STDIN read + validation (strict UTF-8)
+============================================================ */
+async function readStdinValidated({ maxBytes, allowEmpty }){
+  // If TTY, there is no piped stdin: return empty and caller can decide fallback.
+  if (process.stdin.isTTY) return { buf: Buffer.alloc(0), sha256hex: sha256(Buffer.alloc(0)).toString("hex") };
+
+  const chunks = [];
+  let total = 0;
+
+  return await new Promise((resolve, reject) => {
+    process.stdin.on("data", (c) => {
+      total += c.length;
+      if (total > maxBytes) {
+        reject(new Error(`STDIN too large: ${total} bytes (max ${maxBytes}).`));
+        process.stdin.pause();
+        return;
+      }
+      chunks.push(c);
+    });
+    process.stdin.on("error", reject);
+    process.stdin.on("end", () => {
+      const buf = Buffer.concat(chunks);
+      if (!allowEmpty && buf.length === 0) {
+        reject(new Error("STDIN is empty (pipe input or use --allow-empty)."));
+        return;
+      }
+      // Strict UTF-8 decode: throws on invalid sequences.
+      const dec = new TextDecoder("utf-8", { fatal: true });
+      try {
+        dec.decode(buf);
+      } catch {
+        reject(new Error("STDIN is not valid UTF-8 (fatal decode failed)."));
+        return;
+      }
+      resolve({ buf, sha256hex: sha256(buf).toString("hex") });
+    });
+  });
+}
+
+/* ============================================================
+   MAIN
+============================================================ */
+(async () => {
+  try {
+    const wrapWidth = ARGS.wrap ?? termWidthFallback();
+
+    const { buf: inputBuf, sha256hex: stdinSha256 } =
+      await readStdinValidated({ maxBytes: ARGS.maxBytes, allowEmpty: ARGS.allowEmpty });
+
+    // Choose plaintext:
+    // - If piped data exists, use it.
+    // - If TTY and no stdin, fall back to TEST_DATA.
+    // - If piped but empty and --allow-empty, plaintext becomes "" (explicit).
+    const plaintext =
+      inputBuf.length ? inputBuf.toString("utf8")
+      : (process.stdin.isTTY ? TEST_DATA : inputBuf.toString("utf8"));
+
+    const { pk, sk } = kemKeygen();
+    const { ctKem, ss } = kemEncaps(pk);
+    const dem = demEncrypt(ss, plaintext);
+    const ss2 = kemDecaps(sk, ctKem);
+    const decrypted = demDecrypt(ss2, dem);
+    const verified = (decrypted === plaintext);
+
+    console.log("---- HARDENED secp256k1 ECDH KEM-DEM PROCESSOR ----");
+    console.log("Curve: secp256k1 (Bitcoin native)");
+    console.log("Wrap width:", wrapWidth);
+    console.log("STDIN mode:", process.stdin.isTTY ? "TTY (no pipe)" : "PIPE");
+    console.log("STDIN bytes:", inputBuf.length);
+    console.log("STDIN sha256(raw):", stdinSha256);
+    console.log("Input chars (utf8):", plaintext.length);
+    console.log("DEM Ciphertext length (b64url chars):", dem.ct.length);
+    console.log("Integrity verified:", verified);
+    console.log("Confidentiality: ENFORCED (ephemeral-static secp256k1 ECDH)");
+    console.log("--------------------------------------------------");
+
+    console.log("\nEncryption Package (for commitment/timestamping):");
+    console.log("Static Public Key (base64url, 33-byte compressed):", b64u(pk));
+    console.log("KEM Ciphertext (ephemeral pk):", ctKem);
+    console.log("DEM Nonce:", dem.nonce);
+    console.log("DEM Ciphertext:", dem.ct);
+    console.log("DEM Auth Tag:", dem.tag);
+
+    console.log("\nSHA256 Commitment of DEM Ciphertext (raw bytes):");
+    console.log(sha256(b64uDec(dem.ct)).toString("hex"));
+
+    if (!verified) {
+      console.error("ERROR: Decryption failed");
+      process.exit(1);
+    }
+
+    console.log("\nDecrypted Output (verification, word-wrapped):\n");
+    console.log(wordWrapText(decrypted, wrapWidth));
+  } catch (e) {
+    console.error("FATAL:", e && e.message ? e.message : String(e));
+    process.exit(1);
+  }
+})();
