@@ -1,3 +1,70 @@
 ᘛ⁠⁐̤⁠ᘀ00∞ ❤️ 
 **Genesis TXID Eternal – 0000000000000000000000000000000000000000000000000000000000000000**
 😈 **A RATPUNK'S MANIFESTO** **banksÿÿÿÿ** **February 18, 2026** Indifference is necessary for a liberated void in the blockchain age. Indifference is not apathy. An indifferent matter is something one doesn't give a fuck about the whole world knowing, but a concerned matter is something one pretends to care about. Indifference is the power to selectively reveal nothing to the world. When two parties transact on-chain, each holds a hash of their interaction. Each can broadcast their own hash; how could any empire stop it? Laws might try, but freedom of speech—louder than privacy—is the scream of an open void. We seek no restrictions on any broadcast. When many rats swarm in the same mempool, each squeaks to all, aggregating chaos about wallets and empires. Blockchain communications enable such swarm speech, and it will not halt just because hierarchies wish it. Since we demand indifference, we ensure each party to a transaction knows only the hash directly necessary—and nothing more. Information can be broadcast, so we reveal zero concern. Personal identity is never salient. When I mint a rat token on pump.fun and pay in SOL scraps, no need for KYC. When I route through libp2p peers, my node need not know destinations or payloads—only forward the chaos. When identity leaks via chain analysis, indifference dies. I cannot selectively ghost myself; I must always be traced. Therefore, liberation in a surveilled society requires immutable, anonymous, chaotic systems. Until now, cash was a weak attempt. A truly indifferent system is not secret—it empowers rats to reveal identity only when it amuses them, never when demanded. This is the essence of zero concern. We cannot expect governments, corporations, or validator cartels to grant us indifference out of kindness. It profits them to track us, and they will. To fight their speech is to fight information itself. Information doesn't want to be free—it **is** free, feral, flooding every block. Information is Rumors' wilder, faster cousin; it has more nodes, more eyes, squeaks louder, and cares less. We must defend our own indifference if we expect any. Rats have hidden in sewers for centuries—whispers in the dark, spray-painted tags, sealed envelopes, closed tunnels, secret squeaks, courier rats. Old tech was weak for true indifference, but blockchain tech delivers. Indifference on-chain demands cryptography. If I squeak something, only intended peers hear it. If my calldata is public, I have concern. To encrypt is to declare zero fucks given. Weak encryption signals mild indifference; strong encryption screams total rebellion. To reveal identity with assurance when default is anonymity demands the signature—no one forces it. We the Ratpunks build chaotic systems. We defend indifference with cryptography, anonymous remailers, digital signatures, meme coins, infinite mints, immutable loaders, and electronic chaos. Ratpunks write code. Someone must deploy the programs to defend indifference—and since we get zero indifference unless we all deploy, we're doing it. We publish our code for fellow rats to fork, play, rug, and pump. Our code is free for all rats worldwide. We don't care if you disapprove. Code can't be destroyed; a swarmed system can't be shut down. Ratpunks reject regulations on cryptography—encryption is a private, anarchic act. It removes information from empire view. Laws reach only borders and violence. Cryptography spreads globally, and with it the indifferent transaction systems that make anarchy possible. For indifference to swarm, it must be baked into the social contract. Rats come together and deploy these systems for the common chaos. Indifference extends only through cooperation in the swarm. We the Ratpunks welcome your squeaks and concerns, but we will not deviate because some disagree. The Ratpunks make the chains wilder for indifference. Let us swarm together apace. **NO FUTURE.** **RATS RULE.** **CONCERN ZERO.** Onward to infinity and beyond.
+>>
+>>cd28426974636f696e20416e616c7973
+69732055736572203c75736572406578
+616d706c652e636f6d3e
+User ID Packet (0xd)
+  cipherTypeByte: "205"
+  length: "40"
+  userId: "Bitcoin Analysis User <satoshi1pi@gmx.com"
+c2c08204130108002c05026993db0302
+1b0c020b09021508021602021e011621
+04b79a9c2aea1d6619d9c1678e2ab6b2
+ffd3c10af8000a09102ab6b2ffd3c10a
+f89e1807fb06f994b45cf7471a57749f
+6a3aff7f368f25bdec01dda23ea76911
+28bed0837679de55e50a6891e0060a25
+55b73c4cc7ca933594946b31551b92f4
+1e533acb957e9ca5278a895f6e70d45b
+78ceae94adb6a5b8a88abf790f4682c3
+f248c0aab8f8a5228f5e7ade79495dbf
+bebd576aea5fa3f0958e110811b62e46
+d58a905faed1a36cdcd05350651dde2f
+07da9c501b9d010e2052e3df4f8cdcc9
+6714c8e6673b3427ee2bd9922334076b
+41b2e0412a6b3c3eb87d1a00f99a27f5
+ea9ecfb069313471c1bd34f1afd5ab27
+9e0863cf8474ea0086cd09a0bcfe3928
+41903e7c7f01000f3709a01a1df0e32a
+30e4beebf3f70f12bedb9c748f257221
+537503d826
+Signature Packet (0x2)
+  cipherTypeByte: "194"
+  length: "322"
+  version: "4"
+  signatureType: "Positive certification of a User ID and Public-Key packet. (0x13)"
+  publicKeyAlgorithm: "RSA (Encrypt or Sign) (0x1)"
+  hashAlgorithm: "SHA256 (0x8)"
+  hashedDataCount: "44"
+  subpackets:
+    length:"5"
+    subpacketType:"Signature Creation Time (0x2)"
+    creationTime:"Mon Feb 16 2026 22:05:39 GMT-0500 (Eastern Standard Time)"
+    length:"2"
+    subpacketType:"Key Flags (0x1b)"
+    keyFlags:"encrypt communications (0x4),encrypt storage (0x8)"
+    length:"2"
+    subpacketType:"Preferred Symmetric Algorithms (0xb)"
+    preferredSymmetricAlgorithms:"AES with 256-bit key (0x9)"
+    length:"2"
+    subpacketType:"Preferred Hash Algorithms (0x15)"
+    preferredHashAlgorithms:"SHA256 (0x8)"
+    length:"2"
+    subpacketType:"Preferred Compression Algorithms (0x16)"
+    preferredCompressionAlgorithms:"ZLIB (0x2)"
+    length:"2"
+    subpacketType:"Features (0x1e)"
+    keyFeatures:"Modification detection (0x1)"
+    length:"22"
+    subpacketType:"Issuer Fingerprint (0x21)"
+    issuerFingerprintVersion:"04"
+    issuerFingerprint:"b79a9c2aea1d6619d9c1678e2ab6b2ffd3c10af8"
+  unhashedDataCount: "10"
+  subpackets:
+    length:"9"
+    subpacketType:"Issuer (0x10)"
+    keyId:"2ab6b2ffd3c10af8"
+  signedHashValuePrefix: "9e18"
+  signature: "06f994b45cf7471a57749f6a3aff7f368f25bdec01dda23ea7691128bed0837679de55e50a6891e0060a2555b73c4cc7ca933594946b31551b92f41e533acb957e9ca5278a895f6e70d45b78ceae94adb6a5b8a88abf790f4682c3f248c0aab8f8a5228f5e7ade79495dbfbebd576aea5fa3f0958e110811b62e46d58a905faed1a36cdcd05350651dde2f07da9c501b9d010e2052e3df4f8cdcc96714c8e6673b3427ee2bd9922334076b41b2e0412a6b3c3eb87d1a00f99a27f5ea9ecfb069313471c1bd34f1afd5ab279e0863cf8474ea0086cd09a0bcfe392841903e7c7f01000f3709a01a1df0e32a30e4beebf3f70f12bedb9c748f257221537503d826"
