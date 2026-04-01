@@ -1,0 +1,45 @@
+$NULL 70 $NULL 1A 00 $NULL 08 10 16
+$NULL 70 $NULL 1A 00 40 $NULL 09 10 $NULL 70 $NULL 1A 00 $NULL 11 10 01
+$NULL 70 $NULL 1A 00 45 $NULL 12 10 $NULL 70 $NULL 1A 00 32 0C 09 10 00
+$NULL 70 $NULL 1A 00 4C 61 74 74 69 63 65 20 53 74 72 00 61 6D 20 41 63 74 69 76 65 3A 20 00 61 72 73 69 6E 67 20 73 61 6E 69 00 69 7A 65 64 20 73 74 64 69 6E 2E 00 2E 0A 49 6E 6A 65 63 74 65 64 20 00 3A 20 30 20 7C 20 56 61 6C 3A 20 00 0A 49 6E 6A 65 63 74 65 64 20 6E 00 20 30 20 7C 20 56 61 6C 3A 20 36 00 0A 49 6E 6A 65 63 74 65 64 20 6E 00 20 32 30 20 7C 20 56 61 6C 3A 20 00 34 0A 49 6E 6A 65 63 74 65 64 20 00 3A 20 33 30 20 7C 20 56 61 6C 3A 00 34 34 0A 49 6E 6A 65 63 74 65 64 00 6E 3A 20 34 30 20 7C 20 56 61 6C 00 20 36 39 0A 49 6E 6A 65 63 74 65 00 20 6E 3A 20 36 99 88 66 20 7C 20 56 61 00 3A 20 21 33 55 44 33 22 11 21 00 1A 2A 17 76 
+
+On  Jan 1 0001, 10:11 <!> wrote:
+-----BEGIN BLOCK----- .!. # * / # ^(⁠☞R⁠∀T⁠)⁠☞^⁠)⁠↝…⁠ᘛ⁠⁐̤⁠ᕐ⁠ᐷ * # * / # ^(⁠☞[])⁠☞^⁠)⁠↝…⁠ ..........⛧..ᘛ⁠⁐̤⁠ᕐ⁠ᐷ* * * UNIX TIMESTAMP:18000-----END BLOCK-----!  : 😘*'~who luv's ya .? ...banksyyyy��^�� that's WH0.
+{
+  "schema": "rat_attestation/v1",
+  "created_at": "2026-04-01T13:31:20.230Z",
+  "timestamp": {
+    "iso": "2026-04-01T13:31:20.230Z",
+    "unix": 1775050280,
+    "millis": 1775050280230,
+    "canonical": "{\"iso\":\"2026-04-01T13:31:20.230Z\",\"unix\":1775050280,\"millis\":1775050280230}",
+    "ts_hash_dsha256_hex": "5b043970834cffe48c81e8b0d17885ac326b7aedc72a05bcb47d109a44605092"
+  },
+  "stdin": {
+    "bytes": 1158,
+    "sha256_hex": "587c9e19124ec46ffba448feeb7f9899ace86eedd8e9d510fb1f39e178cdd199"
+  },
+  "kem_dem": {
+    "curve": "secp256k1",
+    "dem": "chacha20-poly1305",
+    "static_pk_b64u": "BGy6yi-Lm8AJM15VfwAgynrSNZt0FB5MHEGS1HzYjMbc86GOvio542X3y_Q439fIOIhv2WffO9jRWk0EtQwEQdo",
+    "kem_ct_b64u": "BC_iSG1uCksUSkgkKFpt8M7WmetUpDleZ2wu_aTQ07bcvFrSSf22wafobE3FmgLHhdi1aCeqUqoxdPUWJ_Hnums",
+    "nonce_b64u": "pRorksDC4oWECwEE",
+    "ct_b64u": "_QmdseK0jQ5mXVhyIueIM8HCLF4qfYeIH250nW3Fy9PgMCGU4abmwjtvELvqyGmNPKvMweYk9sVyq0IXtI9Cvi1YqmcRTpSEfTjO62285DBhD890P6uSQIw1VcoturwEyep4TedzOKw2hRaMbbwv5sf-H87ZGtaJYSNU98wlisk03yYNYtqjbVKIu6PAx4UqtYDrYBAKqIIvUBndVellIB-6gNLqon7MVWsQpTRUx_L9ENOZw5EObndeMALSLXTGUVoS0QcV8RE-fmOAhKg8eS6Mf_2lF3htQuw0505DrRCw35a-3oFUknRIFRLSC7RuMkRSCl5IFvj3SrslNXfZzNQFTHzjzZoPZMZi6NvM1zadyEm0koBczQ5w6WeLn4Do-tzbGP7HV93RYryegWXW2T2Ghag9CI3y1inJUhECjOuKG9h0kRf47n4t6DbjrW_4-fy4ZeGdtmsJKGuNM5hfHySgR8BhPIHDXoJTaTdSkytOktpnJowW6cN2mQgvuW0ImeejaqSU58WeUmwQcL-y0VFKNBxuhUHjEWjP1pQcDIOg-WYLei4aY_LIyQ2zPturJZo90jJGWQqAXJWltRvDm0GX9Xy8jgLFFrAlIjXpSPGOkVkJa2bD1ni1In3m4wbRnD59NYQxSRSR-uhTi5ax9AeRlAla2PBGliYQU7bmVlyUjTqNRUI9pR0pWGxEuQ2hoDpXhezeZlZrYAh60MBCNVe-fff-8_5luFB2ByNEs72_yDFnOUq-9zb0grTz8E_cjX6iAlMj0a7aU9guFLjlC_TC7aRBrjJKem5PlpBP6KClKTo09tjZsdKI-DYlIEm9NJEm37h8r-rJuyln9_oPi0T9_V2mLm4gIg8A3MQIRsmRrfk4J_FHzjvC_-kj9iktGoAek5GWznht353JxZCh7AYjko48cKFQtoC18C1CthXY2cgG6fq5xiN4sSMEbd-EzlC5aFBbVid7AnkN2WWSrX-dQjZBllqdIqX07SaiqbEoqrMLHPKKPO1J8YvBwaQ34xTooACQZWWg_4t9fjxIysWzsgMEoVCV_rmZo-5jVnuNvz-zQJ9GlIdgUyUchdmFZLjA3vLZZh45VdLT_GdiEddEv0Wb7_Y40DTAYcGliEPcg3_B3dBcwTuXUEODDarmYXqpMXpfxVkaY1q2Mg0Hyzu7oNkmfWLNJyOtX0I0EOZUcQs-M69nUneCuCk4OrJchqknjrckLabUyzw4g4Dff2pSNp8p46FNqbFowzgarN28wheG0qDloOu23FwPex9N-v2nFZnxWMt4Nd7rwJcTLdZupt39rXKVHVQcc2LTGb_JA8XdnTvnHlWnv-YF5CqGPG4npYpQpaPeQGR-H5MUGQunHms3kSJA2QD6Ufy6IK67NWtjEqTZWodtws66BmWd9hpJyGVwstkHqKKbkSmEJCgPdqoO-GHLVePtZ3lwnJ8sH_t7nVq3ntw1MIrXfqrIZRN_-6avs4Y4IcDbBff95TKp_wh6lROSK6jeAnh5SsBKrHCWMvoLGNbx_ZyvO7IiVhyEb2Eh",
+    "tag_b64u": "Uburronbq9LmaBKoR1zdyw",
+    "dem_ct_sha256_hex": "f8eafdd2e120aef60db8303dd7ece0ff457a1c02152fa77637c1d9d4f92be53b"
+  },
+  "binding": {
+    "attestation_hash_dsha256_hex": "4a66933b9d461e5ce27d70d351b1f546f5e1f4a5134798275bc8ca7c59eee33a",
+    "signed_message_format": "timestamp_canonical || '|' || dem_ct_sha256_rawbytes || stdin_sha256_rawbytes"
+  },
+  "signature": {
+    "scheme": "SPHINCS+",
+    "signature_b64u": null,
+    "signer": null,
+    "note": "No SPHINCS module/key provided; signature omitted."
+  },
+  "bitcoin": {
+    "op_return_payload_hex": "524154304a66933b9d461e5ce27d70d351b1f546f5e1f4a5134798275bc8ca7c59eee33a",
+    "op_return_scriptpubkey_hex": "6a24524154304a66933b9d461e5ce27d70d351b1f546f5e1f4a5134798275bc8ca7c59eee33a"
+  }
