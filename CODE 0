@@ -19,13 +19,13 @@ function parseArgs(argv) {
     jsonOnly: true, // emit single JSON record by default
     sphincsModule: null,     // e.g. "@noble/post-quantum/sphincs+sha2-128f"
     sphincsSkHex: null,      // secret key hex
-    sphincsCtx: "RAT-ATTEST-v1", // context string domain-sep
+    sphincsCtx: "GENESIS-ATTEST-v*9999*", // context string domain-sep
   };
 
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--wrap") out.wrap = clampInt(argv[++i], 20, 400, "--wrap");
-    else if (a === "--max-bytes") out.maxBytes = clampInt(argv[++i], 1, 1e9, "--max-bytes");
+    else if (a === "--max-bytes") out.maxByes = clampInt(argv[++i], 1, 1e9, "--max-bytes");
     else if (a === "--allow-empty") out.allowEmpty = true;
     else if (a === "--time-iso") out.timeIso = argv[++i];
     else if (a === "--time-unix") out.timeUnix = clampInt(argv[++i], 0, 2 ** 53 - 1, "--time-unix");
@@ -67,7 +67,95 @@ const ARGS = parseArgs(process.argv);
 ============================================================ */
 const TEST_DATA = `ᘛ⁠⁐̤⁠ᘀ00∞ ❤️
 
-transmission: PGHIJLL`;
+transmission:<svg xmlns="http://w3.org" viewBox="-300 -300 600 600" width="100%" height="100%">
+  <defs>
+    <!-- Core Basin Color Coding Profiles -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="20%" stop-color="#00f0ff" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#7000ff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#040810" stop-opacity="0"/>
+    </radialGradient>
+    
+    <!-- Fine-line Filament Styles -->
+    <style>
+      .bg { fill: #040810; }
+      .axis { stroke: #102542; stroke-width: 0.75; opacity: 0.7; }
+      .asymptote { stroke: #204060; stroke-width: 0.5; stroke-dasharray: 4, 8; opacity: 0.5; }
+      
+      /* The 4 Basin Filament Layers (representing infinite recursive folding) */
+      .basin-A { stroke: #00f0ff; stroke-width: 0.4; fill: none; opacity: 0.35; }
+      .basin-B { stroke: #ff007f; stroke-width: 0.4; fill: none; opacity: 0.35; }
+      .basin-C { stroke: #ffaa00; stroke-width: 0.4; fill: none; opacity: 0.35; }
+      .basin-D { stroke: #a000ff; stroke-width: 0.4; fill: none; opacity: 0.35; }
+      
+      .boundary-prime { stroke: #ffffff; stroke-width: 0.8; fill: none; opacity: 0.9; }
+      .node-dot { fill: #ffffff; }
+      .text-core { font-family: 'Courier New', monospace; font-size: 10px; fill: #507090; }
+    </style>
+  </defs>
+
+  <!-- Deep Cosmos Background Matrix -->
+  <rect x="-300" y="-300" width="600" height="600" class="bg" />
+
+  <!-- Intersection Center Glow -->
+  <circle cx="0" cy="0" r="180" fill="url(#centerGlow)"/>
+
+  <!-- Principal Coordinate Axes Intersecting at Origin -->
+  <line x1="-280" y1="0" x2="280" y2="0" class="axis" />
+  <line x1="0" y1="-280" x2="0" y2="280" class="axis" />
+
+  <!-- 45-Degree Asymptotes of the Basin Thresholds -->
+  <line x1="-250" y1="-250" x2="250" y2="250" class="asymptote" />
+  <line x1="-250" y1="250" x2="250" y2="-250" class="asymptote" />
+
+  <!-- ================= INFINITE FRACTAL FILAMENTS ================= -->
+  <!-- Generated via automated parametric interpolation of the z -> 0 boundary -->
+  <g id="FractalCore">
+    <!-- Basin A Filaments: Converging toward Quadrant I (0.707 + 0.707i) -->
+    <path d="M0,0 C10,-30 40,-40 80,-80 C40,-40 30,-10 0,0" class="basin-A"/>
+    <path d="M0,0 C5,-15 20,-20 40,-40 C20,-20 15,-5 0,0" class="basin-A"/>
+    <path d="M0,0 C2.5,-7.5 10,-10 20,-20 C10,-20 7.5,-2.5 0,0" class="basin-A"/>
+    <path d="M0,0 C1.2,-3.7 5,-5 10,-10 C5,-10 3.7,-1.2 0,0" class="basin-A"/>
+    
+    <!-- Basin B Filaments: Converging toward Quadrant II (-0.707 + 0.707i) -->
+    <path d="M0,0 C-10,-30 -40,-40 -80,-80 C-40,-40 -30,-10 0,0" class="basin-B"/>
+    <path d="M0,0 C-5,-15 -20,-20 -40,-40 C-20,-20 -15,-5 0,0" class="basin-B"/>
+    <path d="M0,0 C-2.5,-7.5 -10,-10 -20,-20 C-10,-20 -7.5,-2.5 0,0" class="basin-B"/>
+    <path d="M0,0 C-1.2,-3.7 -5,-5 -10,-10 C-5,-10 -3.7,-1.2 0,0" class="basin-B"/>
+
+    <!-- Basin C Filaments: Converging toward Quadrant III (-0.707 - 0.707i) -->
+    <path d="M0,0 C-10,30 -40,40 -80,80 C-40,40 -30,10 0,0" class="basin-C"/>
+    <path d="M0,0 C-5,15 -20,20 -40,40 C-20,20 -15,5 0,0" class="basin-C"/>
+    <path d="M0,0 C-2.5,7.5 -10,10 -20,20 C-10,20 -7.5,2.5 0,0" class="basin-C"/>
+    <path d="M0,0 C-1.2,3.7 -5,5 -10,10 C-5,10 -3.7,1.2 0,0" class="basin-C"/>
+
+    <!-- Basin D Filaments: Converging toward Quadrant IV (0.707 - 0.707i) -->
+    <path d="M0,0 C10,30 40,40 80,80 C40,40 30,10 0,0" class="basin-D"/>
+    <path d="M0,0 C5,15 20,20 40,40 C20,20 15,5 0,0" class="basin-D"/>
+    <path d="M0,0 C2.5,7.5 10,10 20,20 C10,20 7.5,2.5 0,0" class="basin-D"/>
+    <path d="M0,0 C1.2,3.7 5,5 10,10 C5,10 3.7,1.2 0,0" class="basin-D"/>
+  </g>
+
+  <!-- Nested Micro-Glyph Structural Overlays (Self-Similarity Echoes) -->
+  <polygon points="40,-40 40,40 -40,40 -40,-40" class="basin-A" style="stroke-dasharray: 2, 4; opacity: 0.4;"/>
+  <polygon points="20,-20 20,20 -20,20 -20,-20" class="basin-B" style="stroke-dasharray: 1, 2; opacity: 0.5;"/>
+  <polygon points="10,-10 10,10 -10,10 -10,-10" class="basin-C" style="opacity: 0.6;"/>
+  <polygon points="5,-5 5,5 -5,5 -5,-5" class="boundary-prime" style="stroke-width: 0.3;"/>
+
+  <!-- Zero-Point Boundary Singularity Node -->
+  <circle cx="0" cy="0" r="2.5" class="node-dot" />
+  
+  <!-- Map Structural Labels -->
+  <text x="15" y="-250" class="text-core">SINGULARITY ORIGIN: z = 0</text>
+  <text x="15" y="-235" class="text-core">RESOLUTION: 10^(-44) EPOCH MATRIX</text>
+  <text x="15" y="260" class="text-core">NEWTON RAPHSON INTERSECTION MESH</text>
+  <text x="-285" y="-270" class="text-core" style="fill: #00f0ff;">BASIN 1: +0.707+0.707i</text>
+  <text x="-285" y="-255" class="text-core" style="fill: #ff007f;">BASIN 2: -0.707+0.707i</text>
+  <text x="-285" y="-240" class="text-core" style="fill: #ffaa00;">BASIN 3: -0.707-0.707i (0!)</text>
+  <text x="-285" y="-225" class="text-core" style="fill: #a000ff;">BASIN 4: +0.707-0.707i</text>
+</svg>
+`;
 
 /* ============================================================
    Helpers
@@ -337,7 +425,7 @@ async function maybeSphincsSign(messageBytes) {
 
     // Single attestation JSON record
     const record = {
-      schema: "rat_attestation/v1",
+      schema: "Genesis_Blockchain_attestation/v*9999*",
       created_at: ts.iso,
       timestamp: {
         iso: ts.iso,
